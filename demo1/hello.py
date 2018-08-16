@@ -13,6 +13,10 @@ app.config.update(
 def hello_world():
     return 'Hello World!'
 
+@app.route('/item/<id>/')
+def item(id):
+    return 'Item:{}'.format(id)
+
 if __name__=='__main__':
     # 开启调试模式
     app.debug=True
