@@ -2,6 +2,8 @@
 from flask import Flask
 
 app=Flask(__name__)
+# 增加配置管理
+app.config['DEBUG']=True
 
 @app.route('/')
 def hello_world():
