@@ -1,0 +1,14 @@
+version: "3"
+services:  
+
+  dev:
+    image: linrong/ubuntu:1.1
+    expose:
+     - "22"
+     - "80"
+     - "8080"
+     - "8000"
+    volumes:
+      - ../flask:/home/python/flask/
+    restart: always
+    tty: true
