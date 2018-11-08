@@ -1,6 +1,19 @@
 version: "3"
 services:  
 
+  # mysql:
+  #   image: mysql:5.7.24
+  #   ports:
+  #     - ${DB_PORT}:3306
+  #   environment:
+  #     - TZ=Asia/Shanghai
+  #     - MYSQL_ROOT_PASSWORD=dgbuaa
+  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   volumes:
+  #     - ./mysql_data:/var/lib/mysql
+  #     - ./file_hosting_system/databases:/home
+  #   restart: unless-stopped
+  
   dev:
     image: linrong/ubuntu:1.1
     expose:
