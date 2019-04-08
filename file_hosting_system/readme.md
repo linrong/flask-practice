@@ -11,6 +11,7 @@ dgbuaa:dgbuaa@123.cn
 
 ### 创建virtualenv
 ```
+# 创建virtualenv
 # file_hosting_system目录下
 virtualenv --python=python ./virtualenv/
 
@@ -19,6 +20,7 @@ sudo apt-get install libjpeg8-dev -yq
 ./virtualenv/bin/pip install -r requirement.txt
 ```
 ### 数据库操作
+```
 数据库已经内置在ubuntu1.1版本
 
 # 把添加了mysql的容器提交成为一个镜像之后，在新的镜像上实例容器并启动mysql失败，数据库因为hostname的主机名修改了，所以要做一些修改
