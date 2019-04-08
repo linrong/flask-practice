@@ -18,6 +18,12 @@ virtualenv --python=python ./virtualenv/
 # 安装依赖
 sudo apt-get install libjpeg8-dev -yq
 ./virtualenv/bin/pip install -r requirement.txt
+
+# 启动virtualenv
+source ./virtualenv/bin/activate
+
+# 退出virtualenv
+deactivate
 ```
 ### 数据库操作
 ```
