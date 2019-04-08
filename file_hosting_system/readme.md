@@ -19,7 +19,7 @@ sudo apt-get install libjpeg8-dev -yq
 ./virtualenv/bin/pip install -r requirement.txt
 ```
 ### 数据库操作
-
+```
 # 不正确的做法
 # 以下是删除datadir重新初始化，但会把root和默认用户也删除了
 # 数据库因为hostname的主机名修改了，所以要做一些修改
