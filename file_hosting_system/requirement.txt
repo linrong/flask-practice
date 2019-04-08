@@ -2,3 +2,4 @@ python-magic
 Pillow
 cropresize2
 short_url
+SQLAlchemy

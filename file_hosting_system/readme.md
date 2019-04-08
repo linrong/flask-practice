@@ -19,10 +19,11 @@ sudo apt-get install libjpeg8-dev -yq
 ./virtualenv/bin/pip install -r requirement.txt
 ```
 ### 数据库操作
+数据库已经内置在ubuntu1.1版本
 
+# 把添加了mysql的容器提交成为一个镜像之后，在新的镜像上实例容器并启动mysql失败，数据库因为hostname的主机名修改了，所以要做一些修改
 # 不正确的做法
 # 以下是删除datadir重新初始化，但会把root和默认用户也删除了
-# 数据库因为hostname的主机名修改了，所以要做一些修改
 # https://blog.csdn.net/Kohang/article/details/80076570?utm_source=blogxgwz3
 # https://www.cnblogs.com/yuluoluo/p/9637518.html
 cd /var/lib/mysql
