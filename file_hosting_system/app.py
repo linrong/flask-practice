@@ -11,7 +11,7 @@ from utils import get_file_path,humanize_bytes
 
 ONE_MONTH=60*60*24*30
 
-app=Flask(__name__,template_folder='../../templates/r',static_folder='../../static')
+app=Flask(__name__,template_folder='./templates',static_folder='./static')
 app.config.from_object('config')
 
 # SharedDataMiddleware 是提供一个静态文件分享（下载）的路由。
