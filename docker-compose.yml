@@ -16,11 +16,9 @@ services:
   
   dev:
     image: linrong/ubuntu:1.1
-    expose:
-     - "22"
-     - "80"
-     - "8080"
-     - "8000"
+    ports:
+     - "8080:8080"
+     - "8081:8081"
     volumes:
       - ../flask:/home/python/flask/
     restart: always

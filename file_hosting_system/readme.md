@@ -44,3 +44,8 @@ sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 sudo service mysql start
 mysql -udgbuaa -p < ./databases/schema.sql
 ```
+### 操作
+```
+# 创建config.py文件保存文件夹
+mkdir /home/file
+```
