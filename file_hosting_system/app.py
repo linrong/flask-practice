@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # coding=utf-8
 import os
 # 一种WSGI中间件，为开发环境或简单的服务器设置提供静态内容
@@ -16,7 +17,7 @@ app.config.from_object('config')
 # SharedDataMiddleware 是提供一个静态文件分享（下载）的路由。
 # 和 flask 中默认的 static 不同，flask 是利用的 send_file ，而 SharedDataMiddleware 可以直接在 app 里注册相关的路由，并绑定一个磁盘路径，并分享这个路径下的文件。
 # 路由i指向文件夹
-app.wsgi_app=SharedDataMiddleware(app.wsgi_app,{'/i/':get_file_path})
+app.wsgi_app=SharedDataMiddleware(app.wsgi_app,{'/i/':get_file_path()})
 
 mako.init_app(app)
 db.init_app(app)

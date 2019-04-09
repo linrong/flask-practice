@@ -3,3 +3,7 @@ Pillow
 cropresize2
 short_url
 SQLAlchemy
+Werkzeug
+flask
+Flask-Mako
+flask-sqlalchemy

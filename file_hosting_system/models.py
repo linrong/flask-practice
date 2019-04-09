@@ -25,7 +25,7 @@ class PasteFile(db.Model):
     filename=db.Column(db.String(5000),nullable=False)
     filehash=db.Column(db.String(128),nullable=False,unique=True)
     filemd5=db.Column(db.String(128),nullable=False,unique=True)
-    uploadtime=db.Column(db.Datetime,nullable=False)
+    uploadtime=db.Column(db.DateTime,nullable=False)
     mimetype=db.Column(db.String(256),nullable=False)
     size=db.Column(db.Integer,nullable=False)
 
@@ -111,7 +111,7 @@ class PasteFile(db.Model):
     @property
     def url_s(self):
         return self.get_url('s',is_symlink=True)
-        
+
     # 文件下载地址
     @property
     def url_d(self):
