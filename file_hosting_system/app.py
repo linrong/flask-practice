@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+# 一种WSGI中间件，为开发环境或简单的服务器设置提供静态内容
 from werkzeug import SharedDataMiddleware
 from flask import abort,Flask,request,jsonify,redirect,send_file
 
@@ -12,21 +13,27 @@ ONE_MONTH=60*60*24*30
 app=Flask(__name__,template_folder='../../templates/r',static_folder='../../static')
 app.config.from_object('config')
 
+# SharedDataMiddleware 是提供一个静态文件分享（下载）的路由。
+# 和 flask 中默认的 static 不同，flask 是利用的 send_file ，而 SharedDataMiddleware 可以直接在 app 里注册相关的路由，并绑定一个磁盘路径，并分享这个路径下的文件。
+# 路由i指向文件夹
 app.wsgi_app=SharedDataMiddleware(app.wsgi_app,{'/i/':get_file_path})
 
 mako.init_app(app)
 db.init_app(app)
 
+# 对现有的图片重新设置大小，返回新的地址
 @app.route('/r/<img_hash>')
 def rsize(img_hash):
     w = request.args['w']
     h = request.args['h']
-
+    # 数据库根据hash查找数据
     old_paste = PasteFile.get_by_filehash(img_hash)
+    # 图片进行剪切
     new_paste = PasteFile.rsize(old_paste,w,h)
 
     return new_paste.url_i
 
+# 文件下载，通过使用send_file实现
 @app.route('/d/<filehash>',methods=['GET'])
 def download(filehash):
     paste_file = PasteFile.get_by_filehash(filehash)
@@ -36,6 +43,7 @@ def download(filehash):
                     as_attachment=True,
                     attachment_filename=paste_file.filename.encode('utf-8'))
 
+# 首页 
 @app.route('/',methods=['GET','POST'])
 def index():
     if request.method == 'POST':
@@ -46,8 +54,10 @@ def index():
             return abort(400)
         
         if w and h :
+            # 如果上传指定长和宽则会先剪切
             paste_file = PasteFile.rsize(uploaded_file,w,h)
         else:
+            # 创建PasteFile实例
             paste_file = PasteFile.create_by_upload_file(uploaded_file)
 
         db.session.add(paste_file)
@@ -64,6 +74,7 @@ def index():
             'type':paste_file.type,
             'quoteurl':paste_file.quoteurl
         })
+    # 不是POST的话，直接渲染index
     return render_template('index.html',**locals())
 
 @app.after_request
@@ -90,6 +101,7 @@ def j():
         })
     return abort(400)
 
+# 文件预览页
 @app.route('/p/<filehash>')
 def preview(filehash):
     paste_file = PasteFile.get_by_filehash(filehash)
@@ -105,6 +117,7 @@ def preview(filehash):
     
     return render_template('success.html',p=paste_file)
 
+# 短链接页
 @app.route('/s/<symlink>')
 def s(symlink):
     paste_file=PasteFile.get_by_symlink(symlink)

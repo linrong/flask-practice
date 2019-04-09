@@ -57,21 +57,26 @@ class PasteFile(db.Model):
 
     @classmethod
     def get_by_md5(cls,filemd5):
+        # SQLAlchemy查询
         return cls.query.filter_by(filemd5=filemd5).first()
 
     @classmethod
     def create_by_upload_file(cls,uploaded_file):
+        # self表示一个具体的实例本身;cls表示这个类本身
+        # 相当于实例一个PasteFile实例
         rst=cls(uploaded_file.filename,uploaded_file.mimetype,0)
+        # 保存文件，文件名为rst.path,path为PasteFile的只读属性，通过filehash生成的
         uploaded_file.save(rst.path)
         with open(rst.path,'rb') as f:
             filemd5=get_file_md5(f)
-            uploaded_file=cls.get_by_md5(filemd5)
-            if uploaded_file:
+            uploaded_file=cls.get_by_md5(filemd5)# 根据MD5获取数据库数据
+            if uploaded_file: # 文件已经存在，删除刚上传的，返回旧的
                 os.remove(rst.path)
                 return uploaded_file
-        filestat=os.stat(rst.path)
-        rst.size=filestat.st_size
+        filestat=os.stat(rst.path) # os.stat() 方法用于在给定的路径上执行一个系统 stat 的调用
+        rst.size=filestat.st_size # st_size: 普通文件以字节为单位的大小；包含等待某些特殊文件的数据。
         rst.filemd5=filemd5
+        # 返回数据库实例进行commit保存
         return rst
     
     @classmethod
@@ -92,18 +97,22 @@ class PasteFile(db.Model):
         hash_or_link=self.symlink if is_symlink else self.filehash
         return 'http://{host}/{subtype}/{hash_or_link}'.format(subtype=subtype,host=request.host,hash_or_link=hash_or_link)
 
+    # 获取源文件地址
     @property
     def url_i(self):
         return self.get_url('i')
     
+    # 获取文件预览地址
     @property
     def url_p(self):
         return self.get_url('p')
 
+    # 文件短链接地址
     @property
     def url_s(self):
         return self.get_url('s',is_symlink=True)
-
+        
+    # 文件下载地址
     @property
     def url_d(self):
         return self.get_url('d')
@@ -122,10 +131,13 @@ class PasteFile(db.Model):
     
     @classmethod
     def rsize(cls,old_paste,weight,height):
-        assert old_paste.is_image,TypeError('Unsupported Image Typr.')
+        assert old_paste.is_image,TypeError('Unsupported Image Type.')
+        # 相当于
+        # if not old_paste.is_image:
+        #     raise TypeError('Unsupported Image Type.')
         f=open(old_paste.path,'rb')
         im=Image.open(f)
-
+        # 剪切图片
         img=cropresize2.crop_resize(im,(int(weight),int(height)))
 
         rst=cls(old_paste.filename,old_paste.mimetype,0)
