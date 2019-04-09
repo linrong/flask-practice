@@ -38,3 +38,5 @@ def humanize_bytes(bytesize,precision=2):
 # partial 函数的功能就是：把一个函数的某些参数给固定住，返回一个新的函数
 # 把join的两个参数固定为HERE,UPLOAD_FOLDER
 get_file_path=partial(os.path.join,HERE,UPLOAD_FOLDER)
+# 其他地方调用会返回HERE+UPLOAD_FOLDER+文件路径
+# 如果UPLOAD_FOLDER为/file,则会返回/file(即UPLOAD_FOLDER)+文件路径，因为UPLOAD_FOLDER已经是/开头，根目录下的啦
