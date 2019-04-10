@@ -1,30 +1,5 @@
 ## flask文件托管系统
 
-## Tip
-```
-root:root
-python:python
-# mysql
-root:root@mysql
-dgbuaa:dgbuaa@123.cn
-```
-
-### 创建virtualenv
-```
-# 创建virtualenv
-# file_hosting_system目录下
-virtualenv --python=python ./virtualenv/
-
-# 安装依赖
-sudo apt-get install libjpeg8-dev -yq
-./virtualenv/bin/pip install -r requirement.txt
-
-# 启动virtualenv
-source ./virtualenv/bin/activate
-
-# 退出virtualenv
-deactivate
-```
 ### 数据库操作
 ```
 数据库已经内置在ubuntu1.1版本
@@ -44,8 +19,42 @@ sudo chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 sudo service mysql start
 mysql -udgbuaa -p < ./databases/schema.sql
 ```
-### 操作
+
+### 数据库
 ```
-# 创建config.py文件保存文件夹
-mkdir /home/file
+# 上面的操作是使用ubnutu docker image的，目前已经不再使用，仅做参考
+
+# 进入数据库
+docker exec -it flask_mysql_1 bash
+
+# 数据库导入数据，账号root,密码dgbuaa
+mysql -uroot -p < /home/schema.sql
+
+# 登陆数据库
+mysql -uroot -p
+
+# 
+show database;
+
+# 
+use flask;
+show tables;
+```
+
+### dev操作
+```
+# 进入python3
+docker exec -it flask_dev_1 bash
+
+# 创建virtualenv,创建在/home目需下
+virtualenv --python=python /home/virtualenv/
+
+# 安装依赖,file_hosting_system目录下
+/home/virtualenv/bin/pip install -r requirement.txt
+
+# 启动virtualenv
+source /home/virtualenv/bin/activate
+
+# 退出virtualenv
+deactivate
 ```
