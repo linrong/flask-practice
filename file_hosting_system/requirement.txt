@@ -7,3 +7,4 @@ Werkzeug
 flask
 Flask-Mako
 flask-sqlalchemy
+pymysql

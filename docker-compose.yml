@@ -1,25 +1,29 @@
 version: "3"
 services:  
 
-  # mysql:
-  #   image: mysql:5.7.24
-  #   ports:
-  #     - ${DB_PORT}:3306
-  #   environment:
-  #     - TZ=Asia/Shanghai
-  #     - MYSQL_ROOT_PASSWORD=dgbuaa
-  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-  #   volumes:
-  #     - ./mysql_data:/var/lib/mysql
-  #     - ./file_hosting_system/databases:/home
-  #   restart: unless-stopped
+  mysql:
+    image: mysql:5.7.24
+    expose:
+     - "3306"
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_DATABASE=flask
+      - MYSQL_ROOT_PASSWORD=dgbuaa
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./mysql_sql:/home
+    restart: unless-stopped
   
   dev:
-    image: linrong/ubuntu:1.1
+    image: linrong/python3:1.0
     ports:
      - "8080:8080"
      - "8081:8081"
     volumes:
-      - ../flask:/home/python/flask/
-    restart: always
+      - ../flask:/code
+    links:
+      - mysql
+    depends_on:
+      - mysql
     tty: true

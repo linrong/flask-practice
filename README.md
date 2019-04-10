@@ -1,10 +1,11 @@
 # flask
 This repository is mainly about some thoughts and demo in my study of flask
 
-# ubuntu1.1
-* [ubuntu1.1](https://github.com/linrong/dev_tools/tree/master/docker/ubuntu)
-> not use docker-compose mysql
+# python3:1.0
+* [python3:1.0](https://github.com/linrong/dev_tools/tree/master/docker/python)
 
-# use with linrong/ubuntu:1.1
+* [dockerhub](https://cloud.docker.com/repository/docker/linrong/python3)
+
+# use with linrong/python3:1.0
 docker-compose up -d
 
