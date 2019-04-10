@@ -106,3 +106,7 @@ venv.bak/
 # user
 file_hosting_system/virtualenv/*
 !file_hosting_system/virtualenv/.gitkeep
+
+# mysql
+mysql_data/*
+!mysql_data/.gitkeep
