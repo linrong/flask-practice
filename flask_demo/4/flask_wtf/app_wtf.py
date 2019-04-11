@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 # coding=utf-8
+import sys
+sys.path.append('../common')
 from flask import Flask, render_template, request
 from flask_wtf import Form
 from flask_wtf.csrf import CSRFProtect
