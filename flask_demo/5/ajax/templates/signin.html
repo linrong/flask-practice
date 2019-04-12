@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Signin</title>
+        <script src="{{ url_for('static', filename='jquery-3.4.0.min.js') }}"></script>
+        <style>
+            #result {
+                margin-top: 20px;
+                color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <form action="/signin" method="post" role="form">
+                <h2>Please Sign In</h2>
+                <input type="name" name="username" placeholder="Username" required autofocus>
+                <input type="password" name="password" placeholder="Password" required>
+
+                <button class="btn" type="button">SignIn</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+
+        <script type='text/javascript'>
+            $(function() { // $(function() 是在浏览器加载完页面的基础内容后立即执行
+                $('.btn').click(function() {
+                    var $result = $('#result');
+                    var $username = $('input[name="username"]').val();// 获取name="username"的<input>元素的值
+                    var $password = $('input[name="password"]').val();
+                    $.ajax({
+                        url: '/signin',
+                        data: $('form').serialize(),//序列化表单值，结果如下
+                        // data: {'username': $username, 'password': $password},
+                        type: 'POST',
+                        dataType: 'json'
+                    }).done(function(data) {
+                        if (!data.r) {
+                            $result.html(data.rs);//html设置内容，可以添加标签和样式，如果用text()设置文本，用val()设置值
+                        } else {
+                            $result.html(data.error);
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
