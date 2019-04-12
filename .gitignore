@@ -110,3 +110,7 @@ file_hosting_system/virtualenv/*
 # mysql
 mysql_data/*
 !mysql_data/.gitkeep
+
+# mongo
+mongo_data/*
+!mongo_data/.gitkeep
