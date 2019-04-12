@@ -19,4 +19,5 @@ uwsgi --http 0.0.0.0:8080 --wsgi-file app.py --callable app --process 4 --thread
 
 --http-socket和--http两个不同的选项，使用nginx时应该使用--http-socket
 合理的进程和线程不是简单的计算可以得出的，可以使用uwsgitop测试，使用--stats参数，得出比较好的配置
+--stats端口返回监控Uwsgi的信息
 '''
