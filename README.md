@@ -11,6 +11,10 @@ docker-compose up -d
 
 ### virtualenvwrapper
 ```
+# 进入python3
+docker exec -it flask_dev_1 bash
+
+
 # 使用virtualenvwrapper管理虚拟环境
 # 创建目录
 mkdir /home/virtualenv

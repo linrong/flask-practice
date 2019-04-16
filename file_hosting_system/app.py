@@ -6,7 +6,8 @@ from werkzeug import SharedDataMiddleware
 from flask import abort,Flask,request,jsonify,redirect,send_file
 
 from ext import db,mako,render_template
-from models import PasteFile
+#from mysql_models import PasteFile
+from mongo_models import PasteFile
 from utils import get_file_path,humanize_bytes
 
 ONE_MONTH=60*60*24*30
@@ -61,8 +62,12 @@ def index():
             # 创建PasteFile实例
             paste_file = PasteFile.create_by_upload_file(uploaded_file)
 
-        db.session.add(paste_file)
-        db.session.commit()
+        # # mysql的保存
+        # db.session.add(paste_file)
+        # db.session.commit()
+
+        # mongo
+        paste_file.save()
 
         return jsonify({
             'url_d':paste_file.url_d,
@@ -89,8 +94,13 @@ def j():
     uploaded_file=request.files['file']
     if uploaded_file:
         paste_file=PasteFile.create_by_upload_file(uploaded_file)
-        db.session.add(paste_file)
-        db.session.commit()
+        
+        # # mysql的保存
+        # db.session.add(paste_file)
+        # db.session.commit()
+
+        paste_file.save()
+        
         width,height=paste_file.image_size
         return jsonify({
             'url':paste_file.url_i,
@@ -113,9 +123,9 @@ def preview(filehash):
             return abort(404)
         
         paste_file=PasteFile.create_by_old_paste(filehash)
-        db.session.add(paste_file)
-        db.session.commit()
-    
+        # db.session.add(paste_file)
+        # db.session.commit()
+        paste_file.save()
     return render_template('success.html',p=paste_file)
 
 # 短链接页
